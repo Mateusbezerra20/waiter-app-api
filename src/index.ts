@@ -2,9 +2,12 @@ import path from 'node:path';
 import http from 'node:http';
 import express from 'express';
 import mongoose from 'mongoose';
+import dotenv from 'dotenv';
 import { Server } from 'socket.io';
 
 import { router } from './router';
+
+dotenv.config();
 
 mongoose.set('strictQuery', false);
 
@@ -12,7 +15,9 @@ const app = express();
 const server = http.createServer(app);
 export const io = new Server(server);
 
-mongoose.connect('mongodb://127.0.0.1:27017')
+console.log(`mongodb+srv://mateusmba20:${process.env.PASSWORD}@waiterapp.v7d58po.mongodb.net/?retryWrites=true&w=majority`);
+
+mongoose.connect(`mongodb+srv://mateusmba20:${process.env.PASSWORD}@waiterapp.v7d58po.mongodb.net/?retryWrites=true&w=majority`)
   .then(() => {
     // Após fazer a conexão com o mongodb, executar o servidor da api
 
