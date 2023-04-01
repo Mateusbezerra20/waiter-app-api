@@ -15,8 +15,6 @@ const app = express();
 const server = http.createServer(app);
 export const io = new Server(server);
 
-console.log(`mongodb+srv://mateusmba20:${process.env.PASSWORD}@waiterapp.v7d58po.mongodb.net/?retryWrites=true&w=majority`);
-
 mongoose.connect(`mongodb+srv://mateusmba20:${process.env.PASSWORD}@waiterapp.v7d58po.mongodb.net/?retryWrites=true&w=majority`)
   .then(() => {
     // Após fazer a conexão com o mongodb, executar o servidor da api
