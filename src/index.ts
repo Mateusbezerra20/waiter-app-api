@@ -15,7 +15,7 @@ const app = express();
 const server = http.createServer(app);
 export const io = new Server(server);
 
-mongoose.connect(`mongodb+srv://mateusmba20:${process.env.PASSWORD}@waiterapp.v7d58po.mongodb.net/?retryWrites=true&w=majority`)
+mongoose.connect(`${process.env.DATABASE_URL}`)
   .then(() => {
     // Após fazer a conexão com o mongodb, executar o servidor da api
 
@@ -40,5 +40,3 @@ mongoose.connect(`mongodb+srv://mateusmba20:${process.env.PASSWORD}@waiterapp.v7
     });
   })
   .catch(() => console.log('Erro ao conectar ao Mongodb'));
-
-
