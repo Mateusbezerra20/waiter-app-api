@@ -6,10 +6,10 @@ export async function listProducts( req: Request, res: Response ) {
 
     const products = await Product.find();
 
-    res.json(products);
+    return res.json(products);
 
   } catch (error) {
     console.log(error);
-    res.sendStatus(500);
+    return res.sendStatus(500);
   }
 }
