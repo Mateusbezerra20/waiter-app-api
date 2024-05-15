@@ -13,6 +13,11 @@ import { changeOrderStatus } from './useCase/Orders/ChangeOrderStatus';
 import { cancelOrder } from './useCase/Orders/CancelOrder';
 import { createUser } from './useCase/Users/createUser';
 import { listUsers } from './useCase/Users/listUsers';
+import { login } from './useCase/Authentication/login';
+import { authenticate } from './middlewares/authenticate';
+import { updateUser } from './useCase/Users/updateUser';
+import { deleteUser } from './useCase/Users/deleteUser';
+import { showUser } from './useCase/Users/showUser';
 
 export const router = Router();
 
@@ -29,32 +34,24 @@ const upload = multer({
 });
 
 
-// List categories
-router.get('/categories', listCategory);
+router.post('/login', login);
 
-// Create category
+router.use(authenticate);
+
+router.get('/categories', listCategory);
 router.post('/categories', createCategory);
 
-// List products
 router.get('/products', listProducts);
-
-// Create product
 router.post('/products', upload.single('image'), createProduct);
-
-// Get product by category
 router.get('/categories/:categoryId/products', listProductsByCategory);
 
-// List orders
 router.get('/orders', listOrders);
-
-// Create order
 router.post('/orders', createOrder);
-
-// Change order status
 router.patch('/orders/:orderId', changeOrderStatus);
-
-// Delete/cancel order
 router.delete('/orders/:orderId', cancelOrder);
 
 router.post('/users', createUser);
 router.get('/users', listUsers);
+router.get('/users/:id', showUser);
+router.put('/users/:id', updateUser);
+router.delete('/users/:id', deleteUser);
