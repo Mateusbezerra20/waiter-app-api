@@ -18,6 +18,7 @@ import { authenticate } from './middlewares/authenticate';
 import { updateUser } from './useCase/Users/updateUser';
 import { deleteUser } from './useCase/Users/deleteUser';
 import { showUser } from './useCase/Users/showUser';
+import { authorization } from './middlewares/authorization';
 
 export const router = Router();
 
@@ -38,20 +39,20 @@ router.post('/login', login);
 
 router.use(authenticate);
 
-router.get('/categories', listCategory);
-router.post('/categories', createCategory);
+router.get('/categories', authorization(['ADMIN', 'WAITER']), listCategory);
+router.post('/categories', authorization(['ADMIN']), createCategory);
 
-router.get('/products', listProducts);
-router.post('/products', upload.single('image'), createProduct);
-router.get('/categories/:categoryId/products', listProductsByCategory);
+router.get('/products', authorization(['ADMIN', 'WAITER']), listProducts);
+router.post('/products', authorization(['ADMIN']), upload.single('image'), createProduct);
+router.get('/categories/:categoryId/products', authorization(['ADMIN', 'WAITER']), listProductsByCategory);
 
-router.get('/orders', listOrders);
-router.post('/orders', createOrder);
-router.patch('/orders/:orderId', changeOrderStatus);
-router.delete('/orders/:orderId', cancelOrder);
+router.get('/orders', authorization(['ADMIN']), listOrders);
+router.post('/orders', authorization(['ADMIN', 'WAITER']), createOrder);
+router.patch('/orders/:orderId', authorization(['ADMIN']), changeOrderStatus);
+router.delete('/orders/:orderId', authorization(['ADMIN']), cancelOrder);
 
-router.post('/users', createUser);
-router.get('/users', listUsers);
-router.get('/users/:id', showUser);
-router.put('/users/:id', updateUser);
-router.delete('/users/:id', deleteUser);
+router.post('/users', authorization(['ADMIN']), createUser);
+router.get('/users', authorization(['ADMIN']), listUsers);
+router.get('/users/:id', authorization(['ADMIN', 'WAITER']), showUser);
+router.put('/users/:id', authorization(['ADMIN', 'WAITER']), updateUser);
+router.delete('/users/:id', authorization(['ADMIN']), deleteUser);
