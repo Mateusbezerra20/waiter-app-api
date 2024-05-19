@@ -23,6 +23,11 @@ import { me } from './useCase/Users/me';
 
 export const router = Router();
 
+const roles = {
+  admin: 'ADMIN',
+  waiter: 'WAITER'
+};
+
 const upload = multer({
   storage: multer.diskStorage({
     destination(req, file, callback) {
@@ -40,21 +45,21 @@ router.post('/login', login);
 
 router.use(authenticate);
 
-router.get('/categories', authorization(['ADMIN', 'WAITER']), listCategory);
-router.post('/categories', authorization(['ADMIN']), createCategory);
+router.get('/categories', authorization([roles.admin, roles.waiter]), listCategory);
+router.post('/categories', authorization([roles.admin]), createCategory);
 
-router.get('/products', authorization(['ADMIN', 'WAITER']), listProducts);
-router.post('/products', authorization(['ADMIN']), upload.single('image'), createProduct);
-router.get('/categories/:categoryId/products', authorization(['ADMIN', 'WAITER']), listProductsByCategory);
+router.get('/products', authorization([roles.admin, roles.waiter]), listProducts);
+router.post('/products', authorization([roles.admin]), upload.single('image'), createProduct);
+router.get('/categories/:categoryId/products', authorization([roles.admin, roles.waiter]), listProductsByCategory);
 
-router.get('/orders', authorization(['ADMIN']), listOrders);
-router.post('/orders', authorization(['ADMIN', 'WAITER']), createOrder);
-router.patch('/orders/:orderId', authorization(['ADMIN']), changeOrderStatus);
-router.delete('/orders/:orderId', authorization(['ADMIN']), cancelOrder);
+router.get('/orders', authorization([roles.admin]), listOrders);
+router.post('/orders', authorization([roles.admin, roles.waiter]), createOrder);
+router.patch('/orders/:orderId', authorization([roles.admin]), changeOrderStatus);
+router.delete('/orders/:orderId', authorization([roles.admin]), cancelOrder);
 
-router.post('/users', authorization(['ADMIN']), createUser);
-router.get('/users', authorization(['ADMIN']), listUsers);
-router.get('/users/me', authorization(['ADMIN', 'WAITER']), me);
-router.get('/users/:id', authorization(['ADMIN', 'WAITER']), showUser);
-router.put('/users/:id', authorization(['ADMIN', 'WAITER']), updateUser);
-router.delete('/users/:id', authorization(['ADMIN']), deleteUser);
+router.post('/users', authorization([roles.admin]), createUser);
+router.get('/users', authorization([roles.admin]), listUsers);
+router.get('/users/me', authorization([roles.admin, roles.waiter]), me);
+router.get('/users/:id', authorization([roles.admin, roles.waiter]), showUser);
+router.put('/users/:id', authorization([roles.admin, roles.waiter]), updateUser);
+router.delete('/users/:id', authorization([roles.admin]), deleteUser);
