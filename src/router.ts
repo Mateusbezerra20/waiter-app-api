@@ -19,6 +19,7 @@ import { updateUser } from './useCase/Users/updateUser';
 import { deleteUser } from './useCase/Users/deleteUser';
 import { showUser } from './useCase/Users/showUser';
 import { authorization } from './middlewares/authorization';
+import { me } from './useCase/Users/me';
 
 export const router = Router();
 
@@ -53,6 +54,7 @@ router.delete('/orders/:orderId', authorization(['ADMIN']), cancelOrder);
 
 router.post('/users', authorization(['ADMIN']), createUser);
 router.get('/users', authorization(['ADMIN']), listUsers);
+router.get('/users/me', authorization(['ADMIN', 'WAITER']), me);
 router.get('/users/:id', authorization(['ADMIN', 'WAITER']), showUser);
 router.put('/users/:id', authorization(['ADMIN', 'WAITER']), updateUser);
 router.delete('/users/:id', authorization(['ADMIN']), deleteUser);
