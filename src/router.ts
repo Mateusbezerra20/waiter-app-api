@@ -21,6 +21,7 @@ import { showUser } from './useCase/Users/showUser';
 import { authorization } from './middlewares/authorization';
 import { me } from './useCase/Users/me';
 import { listCurrentUserOrders } from './useCase/Orders/listCurrentUserOrders';
+import { updateCategory } from './useCase/categories/updateCategory';
 
 export const router = Router();
 
@@ -48,6 +49,7 @@ router.use(authenticate);
 
 router.get('/categories', authorization([roles.admin, roles.waiter]), listCategory);
 router.post('/categories', authorization([roles.admin]), createCategory);
+router.put('/categories/:id', authorization([roles.admin]), updateCategory);
 
 router.get('/products', authorization([roles.admin, roles.waiter]), listProducts);
 router.post('/products', authorization([roles.admin]), upload.single('image'), createProduct);
