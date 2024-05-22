@@ -5,7 +5,7 @@ import { io } from '../../';
 
 export async function createOrder( req: Request, res: Response ) {
   try {
-    const { table, products } = req.body;
+    const { table, user, products } = req.body;
 
     if(!table) {
       return res.status(400).json({
@@ -13,7 +13,7 @@ export async function createOrder( req: Request, res: Response ) {
       });
     }
 
-    const order = await Order.create({table, products});
+    const order = await Order.create({table, user, products});
     const orderDetails = await order.populate('products.product');
 
     // Avisar ao client quando uma order for cadastrada.

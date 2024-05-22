@@ -14,6 +14,15 @@ export const Order = model('Order', new Schema({
     type: Date,
     default: Date.now
   },
+  archived: {
+    type: Boolean,
+    default: false
+  },
+  user: {
+    required: true,
+    type: Schema.Types.ObjectId,
+    ref: 'User'
+  },
   products: {
     required: true,
     type: [{

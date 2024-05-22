@@ -20,6 +20,7 @@ import { deleteUser } from './useCase/Users/deleteUser';
 import { showUser } from './useCase/Users/showUser';
 import { authorization } from './middlewares/authorization';
 import { me } from './useCase/Users/me';
+import { listCurrentUserOrders } from './useCase/Orders/listCurrentUserOrders';
 
 export const router = Router();
 
@@ -53,6 +54,7 @@ router.post('/products', authorization([roles.admin]), upload.single('image'), c
 router.get('/categories/:categoryId/products', authorization([roles.admin, roles.waiter]), listProductsByCategory);
 
 router.get('/orders', authorization([roles.admin]), listOrders);
+router.get('/orders/my', authorization([roles.admin, roles.waiter]), listCurrentUserOrders);
 router.post('/orders', authorization([roles.admin, roles.waiter]), createOrder);
 router.patch('/orders/:orderId', authorization([roles.admin]), changeOrderStatus);
 router.delete('/orders/:orderId', authorization([roles.admin]), cancelOrder);
