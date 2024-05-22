@@ -1,14 +1,14 @@
 import { NextFunction, Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 
-interface LogedUser {
+interface LoggedUser {
   id: string;
   role: 'ADMIN' | 'WAITER';
 }
 
 declare module 'express-serve-static-core' {
   interface Request {
-    logedUser: LogedUser;
+    loggedUser: LoggedUser;
   }
 }
 
@@ -24,9 +24,9 @@ export function authenticate(req: Request, resp: Response, next: NextFunction) {
 
     const sKey = process.env.JWT_PRIVATE_KEY || 'anotherSecretKey';
 
-    const payload = jwt.verify(tokenOnly, sKey) as LogedUser;
+    const payload = jwt.verify(tokenOnly, sKey) as LoggedUser;
 
-    req.logedUser = payload;
+    req.loggedUser = payload;
 
     next();
   } catch (err) {

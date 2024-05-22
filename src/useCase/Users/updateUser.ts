@@ -5,7 +5,7 @@ import { User } from '../../models/User';
 export async function updateUser(req: Request, resp: Response) {
   const { name, email, password, role: newRole } = req.body;
   const { id: userBeingEditedId } = req.params;
-  const { id: userLogedId, role: userLogedRole } = req.logedUser;
+  const { id: userLoggedId, role: userLoggedRole } = req.loggedUser;
 
   if (!(['ADMIN', 'WAITER'].includes(newRole))) {
     return resp.status(400).json({
@@ -13,13 +13,13 @@ export async function updateUser(req: Request, resp: Response) {
     });
   }
 
-  if (userLogedRole === 'WAITER' && userBeingEditedId !== userLogedId) {
+  if (userLoggedRole === 'WAITER' && userBeingEditedId !== userLoggedId) {
     return resp.status(403).json({
       message: 'user is not authorized to access this resource.'
     });
   }
 
-  const role = userLogedRole === 'WAITER' ? 'WAITER' : newRole;
+  const role = userLoggedRole === 'WAITER' ? 'WAITER' : newRole;
 
   try {
     const userWithSameEmail = await User.findOne({ email });

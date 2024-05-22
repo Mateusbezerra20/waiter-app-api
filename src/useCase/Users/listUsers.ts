@@ -5,8 +5,6 @@ export async function listUsers(req: Request, resp: Response) {
   try {
     const users = await User.find();
 
-    console.log(req.logedUser);
-
     return resp.status(200).json(users);
   } catch (err) {
     console.error(err);
