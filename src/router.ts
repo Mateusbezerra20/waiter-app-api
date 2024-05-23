@@ -21,6 +21,9 @@ import { showUser } from './useCase/Users/showUser';
 import { authorization } from './middlewares/authorization';
 import { me } from './useCase/Users/me';
 import { listCurrentUserOrders } from './useCase/Orders/listCurrentUserOrders';
+import { updateCategory } from './useCase/categories/updateCategory';
+import { deleteCategory } from './useCase/categories/deleteCategory';
+import { deleteProduct } from './useCase/Products/deleteProduct';
 
 export const router = Router();
 
@@ -48,10 +51,13 @@ router.use(authenticate);
 
 router.get('/categories', authorization([roles.admin, roles.waiter]), listCategory);
 router.post('/categories', authorization([roles.admin]), createCategory);
+router.put('/categories/:id', authorization([roles.admin]), updateCategory);
+router.delete('/categories/:id', authorization([roles.admin]), deleteCategory);
 
 router.get('/products', authorization([roles.admin, roles.waiter]), listProducts);
 router.post('/products', authorization([roles.admin]), upload.single('image'), createProduct);
 router.get('/categories/:categoryId/products', authorization([roles.admin, roles.waiter]), listProductsByCategory);
+router.delete('/products/:id', authorization([roles.admin]), deleteProduct);
 
 router.get('/orders', authorization([roles.admin]), listOrders);
 router.get('/orders/my', authorization([roles.admin, roles.waiter]), listCurrentUserOrders);
