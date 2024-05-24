@@ -24,6 +24,7 @@ import { listCurrentUserOrders } from './useCase/Orders/listCurrentUserOrders';
 import { updateCategory } from './useCase/categories/updateCategory';
 import { deleteCategory } from './useCase/categories/deleteCategory';
 import { deleteProduct } from './useCase/Products/deleteProduct';
+import { updateProduct } from './useCase/Products/updateProduct';
 
 export const router = Router();
 
@@ -58,6 +59,7 @@ router.get('/products', authorization([roles.admin, roles.waiter]), listProducts
 router.post('/products', authorization([roles.admin]), upload.single('image'), createProduct);
 router.get('/categories/:categoryId/products', authorization([roles.admin, roles.waiter]), listProductsByCategory);
 router.delete('/products/:id', authorization([roles.admin]), deleteProduct);
+router.put('/products/:id', authorization([roles.admin]), upload.single('image'), updateProduct);
 
 router.get('/orders', authorization([roles.admin]), listOrders);
 router.get('/orders/my', authorization([roles.admin, roles.waiter]), listCurrentUserOrders);
