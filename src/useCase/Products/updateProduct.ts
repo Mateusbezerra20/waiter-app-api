@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { unlink } from 'node:fs';
+import { unlink } from 'fs';
 import path from 'path';
 import { Product } from '../../models/Product';
 
