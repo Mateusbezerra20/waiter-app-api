@@ -14,7 +14,7 @@ export async function updateProduct(req: Request, res: Response) {
       description,
       price,
       category,
-      ingredients,
+      ingredients: ingredients ? JSON.parse(ingredients) : undefined,
       imagePath
     });
 
