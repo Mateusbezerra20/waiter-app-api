@@ -20,9 +20,13 @@ export function authenticate(req: Request, resp: Response, next: NextFunction) {
   }
 
   try {
-    const tokenOnly = token?.split(' ')[1];
+    const tokenOnly = token.split(' ')[1];
 
-    const sKey = process.env.JWT_PRIVATE_KEY || 'anotherSecretKey';
+    const sKey = process.env.JWT_PRIVATE_KEY;
+
+    if (!sKey) {
+      throw new Error('Authentication failed');
+    }
 
     const payload = jwt.verify(tokenOnly, sKey) as LoggedUser;
 

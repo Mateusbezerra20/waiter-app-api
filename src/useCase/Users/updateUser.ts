@@ -32,14 +32,14 @@ export async function updateUser(req: Request, resp: Response) {
 
     const passwordHash = await bcrypt.hash(password, 10);
 
-    const updatedUser = await User.findByIdAndUpdate(userBeingEditedId, {
+    await User.findByIdAndUpdate(userBeingEditedId, {
       name,
       email,
       password: passwordHash,
       role
     });
 
-    return resp.status(200).json(updatedUser);
+    return resp.sendStatus(204);
   } catch (err) {
     console.error(err);
     return resp.sendStatus(500);
