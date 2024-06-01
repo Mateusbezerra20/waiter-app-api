@@ -1,4 +1,3 @@
-import path from 'path';
 import http from 'http';
 import express from 'express';
 import mongoose from 'mongoose';
@@ -34,8 +33,6 @@ mongoose.connect(`${process.env.DATABASE_URL}`)
       }
     });
 
-    // rota /uploads serve arquivos estáticos
-    app.use('/uploads', express.static(path.resolve(__dirname, '..', 'uploads')));
     app.use(express.json());
     app.use(router);
 

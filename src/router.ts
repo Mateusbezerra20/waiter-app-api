@@ -1,5 +1,5 @@
 import path from 'path';
-import { Router } from 'express';
+import express, { Router } from 'express';
 import multer from 'multer';
 
 import { createCategory } from './useCase/categories/createCategory';
@@ -45,7 +45,7 @@ const upload = multer({
   })
 });
 
-
+router.use('/uploads', express.static(path.resolve(__dirname, '..', 'uploads')));
 router.post('/login', login);
 
 router.use(authenticate);
