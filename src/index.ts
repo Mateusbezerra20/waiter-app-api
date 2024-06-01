@@ -27,7 +27,11 @@ mongoose.connect(`${process.env.DATABASE_URL}`)
       resp.setHeader('Access-Control-Allow-Methods', '*');
       resp.setHeader('Access-Control-Allow-Headers', '*');
 
-      next();
+      if (req.method === 'OPTIONS') {
+        resp.sendStatus(204);
+      } else {
+        next();
+      }
     });
 
     // rota /uploads serve arquivos estáticos
