@@ -37,7 +37,7 @@ mongoose.connect(`${process.env.DATABASE_URL}`)
     app.use(router);
 
     server.listen(port, () => {
-      console.log(`Server is running on http://localhost:${port}`);
+      console.log('Server is running');
     });
   })
   .catch(() => console.log('Erro ao conectar ao Mongodb'));
